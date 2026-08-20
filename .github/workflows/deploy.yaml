@@ -34,4 +34,4 @@ jobs:
         run: pnpm exec cdk deploy console-stack --require-approval never
       
       - name: cdk deploy MobileStack
-        run: pnpm exec cdk deploy mobile-stack --require-approval neverß
+        run: pnpm exec cdk deploy mobile-stack --require-approval never
