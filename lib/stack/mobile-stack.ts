@@ -1,0 +1,48 @@
+import * as cdk from 'aws-cdk-lib';
+import { Construct } from 'constructs';
+import * as apigw from 'aws-cdk-lib/aws-apigateway';
+import * as lambda from 'aws-cdk-lib/aws-lambda';
+import * as lambdaNodejs from 'aws-cdk-lib/aws-lambda-nodejs'; // 1. Added NodejsFunction import
+import * as path from 'node:path';
+
+export class MobileStack extends cdk.Stack {
+  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+    super(scope, id, props);
+
+    const lambda1 = new lambdaNodejs.NodejsFunction(this, 'Lambda1Function', {
+      functionName: 'mobile-lambda1',
+      runtime: lambda.Runtime.NODEJS_LATEST,
+      entry: path.join(__dirname, '../../src/lambda-handlers/mobile/lambda1/index.ts'),
+      handler: 'handler',
+    });
+
+    const lambda2 = new lambdaNodejs.NodejsFunction(this, 'Lambda2Function', {
+      functionName: 'mobile-lambda2',
+      runtime: lambda.Runtime.NODEJS_LATEST,
+      entry: path.join(__dirname, '../../src/lambda-handlers/mobile/lambda2/index.ts'),
+      handler: 'handler',
+    });
+
+    const lambda3 = new lambdaNodejs.NodejsFunction(this, 'Lambda3Function', {
+      functionName: 'mobile-lambda3',
+      runtime: lambda.Runtime.NODEJS_LATEST,
+      entry: path.join(__dirname, '../../src/lambda-handlers/mobile/lambda3/index.ts'),
+      handler: 'handler',
+    });
+
+    const api = new apigw.RestApi(this, 'MobileApi', {
+      restApiName: 'mobile-stack-api',
+    });
+
+    const mobile = api.root.addResource('mobile');
+
+    const l1 = mobile.addResource('lambda1');
+    l1.addMethod('GET', new apigw.LambdaIntegration(lambda1));
+
+    const l2 = mobile.addResource('lambda2');
+    l2.addMethod('GET', new apigw.LambdaIntegration(lambda2));
+
+    const l3 = mobile.addResource('lambda3');
+    l3.addMethod('GET', new apigw.LambdaIntegration(lambda3));
+  }
+}
