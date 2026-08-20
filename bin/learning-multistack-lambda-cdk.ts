@@ -5,7 +5,7 @@ import { ConsoleStack } from '../lib/stack/ConsoleStack';
 import { BackendStack } from '../lib/stack/BackendStack';
 
 const app = new cdk.App();
-new MobileStack(app, 'MobileStack', {});
-new ConsoleStack(app, 'ConsoleStack', {});
-new BackendStack(app, 'BackendStack', {});
+new MobileStack(app, 'mobile-stack', {});
+new ConsoleStack(app, 'console-stack', {});
+new BackendStack(app, 'backend-stack', {});
 
