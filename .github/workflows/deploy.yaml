@@ -20,7 +20,7 @@ jobs:
 
       - name: install dependencies
         run: pnpm install 
-        
+
       - name: debug oidc token
         run: |
           curl -sS -H "Authorization: bearer $ACTIONS_ID_TOKEN_REQUEST_TOKEN" \
@@ -34,7 +34,7 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: cdk diff
-        run: pnpm exec cdk diff mobile-stack
+        run: pnpm exec cdk diff --all  --require-approval never
 
       - name: cdk deploy
-        run: pnpm exec cdk deploy mobile-stack --require-approval never
+        run: pnpm exec cdk deploy --all --require-approval never
