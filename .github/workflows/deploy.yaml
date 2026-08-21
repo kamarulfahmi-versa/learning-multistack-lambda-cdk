@@ -26,9 +26,9 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GithubActionLambda
           aws-region: ${{ secrets.AWS_REGION }}
-          
-      - name: derive affected SHAs
-        uses: nrwl/nx-set-shas@v4
+
+      - name: Derive appropriate SHAs for base and head for `nx affected` commands
+        uses: nrwl/nx-set-shas@v5
 
       - name: cdk deploy affected stacks
         run: pnpm nx affected -t deploy
