@@ -32,5 +32,10 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v5
 
-      - name: cdk deploy affected stacks
-        run: pnpm nx affected -t deploy
+      - name: deploy ${{ matrix.app }} (if affected)
+        run: |
+          if pnpm nx show projects --affected | grep -qx "${{ matrix.app }}"; then
+            pnpm nx run ${{ matrix.app }}:deploy
+          else
+            echo "${{ matrix.app }} not affected — skipping"
+          fi
