@@ -32,26 +32,20 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v5
 
+      - uses: nrwl/nx-set-shas@v5
+
+      - name: compute affected
+        id: affected
+        run: echo "projects=$(pnpm nx show projects --affected --json)" >> "$GITHUB_OUTPUT"
+
       - name: deploy backend
-        run: |
-          if pnpm nx show projects --affected | grep -qx backend; then
-            pnpm nx run backend:deploy
-          else
-            echo "backend not affected — skipping"
-          fi
+        if: contains(fromJSON(steps.affected.outputs.projects), 'backend')
+        run: pnpm nx run backend:deploy
 
       - name: deploy console
-        run: |
-          if pnpm nx show projects --affected | grep -qx console; then
-            pnpm nx run console:deploy
-          else
-            echo "console not affected — skipping"
-          fi
+        if: contains(fromJSON(steps.affected.outputs.projects), 'console')
+        run: pnpm nx run console:deploy
 
       - name: deploy mobile
-        run: |
-          if pnpm nx show projects --affected | grep -qx mobile; then
-            pnpm nx run mobile:deploy
-          else
-            echo "mobile not affected — skipping"
-          fi
+        if: contains(fromJSON(steps.affected.outputs.projects), 'mobile')
+        run: pnpm nx run mobile:deploy
