@@ -32,10 +32,26 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v5
 
-      - name: deploy ${{ matrix.app }} (if affected)
+      - name: deploy backend if affected
         run: |
-          if pnpm nx show projects --affected | grep -qx "${{ matrix.app }}"; then
-            pnpm nx run ${{ matrix.app }}:deploy
+          if pnpm nx show projects --affected | grep -qx backend; then
+            pnpm nx run backend:deploy
           else
-            echo "${{ matrix.app }} not affected — skipping"
+            echo "backend not affected — skipping"
+          fi
+
+      - name: deploy console if affected
+        run: |
+          if pnpm nx show projects --affected | grep -qx console; then
+            pnpm nx run console:deploy
+          else
+            echo "console not affected — skipping"
+          fi
+
+      - name: deploy mobile if affected
+        run: |
+          if pnpm nx show projects --affected | grep -qx mobile; then
+            pnpm nx run mobile:deploy
+          else
+            echo "mobile not affected — skipping"
           fi
