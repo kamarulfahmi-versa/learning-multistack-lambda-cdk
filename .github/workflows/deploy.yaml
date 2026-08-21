@@ -32,8 +32,6 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v5
 
-      - uses: nrwl/nx-set-shas@v5
-
       - name: compute affected
         id: affected
         run: echo "projects=$(pnpm nx show projects --affected --json)" >> "$GITHUB_OUTPUT"
