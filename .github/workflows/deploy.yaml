@@ -32,7 +32,7 @@ jobs:
       - name: Derive appropriate SHAs for base and head for `nx affected` commands
         uses: nrwl/nx-set-shas@v5
 
-      - name: deploy backend if affected
+      - name: deploy backend
         run: |
           if pnpm nx show projects --affected | grep -qx backend; then
             pnpm nx run backend:deploy
@@ -40,7 +40,7 @@ jobs:
             echo "backend not affected — skipping"
           fi
 
-      - name: deploy console if affected
+      - name: deploy console
         run: |
           if pnpm nx show projects --affected | grep -qx console; then
             pnpm nx run console:deploy
@@ -48,7 +48,7 @@ jobs:
             echo "console not affected — skipping"
           fi
 
-      - name: deploy mobile if affected
+      - name: deploy mobile
         run: |
           if pnpm nx show projects --affected | grep -qx mobile; then
             pnpm nx run mobile:deploy
