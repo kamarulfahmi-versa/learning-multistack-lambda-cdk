@@ -1,0 +1,10 @@
+{
+  "name":"console",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "tsc",
+    "synth": "cdk synth",
+    "deploy": "cdk deploy console-stack --require-approval never",
+    "test": "jest"
+  }
+}

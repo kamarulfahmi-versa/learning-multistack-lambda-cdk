@@ -26,12 +26,9 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::${{ secrets.AWS_ACCOUNT_ID }}:role/GithubActionLambda
           aws-region: ${{ secrets.AWS_REGION }}
+          
+      - name: derive affected SHAs
+        uses: nrwl/nx-set-shas@v4
 
-      - name: cdk deploy BackendStack
-        run: pnpm exec cdk deploy backend-stack --require-approval never
-
-      - name: cdk deploy ConsoleStack
-        run: pnpm exec cdk deploy console-stack --require-approval never
-      
-      - name: cdk deploy MobileStack
-        run: pnpm exec cdk deploy mobile-stack --require-approval never
+      - name: cdk deploy affected stacks
+        run: pnpm nx affected -t deploy

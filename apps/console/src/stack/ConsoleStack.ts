@@ -2,7 +2,7 @@ import * as cdk from 'aws-cdk-lib';
 import { Construct } from 'constructs';
 import * as apigw from 'aws-cdk-lib/aws-apigateway';
 import * as lambda from 'aws-cdk-lib/aws-lambda';
-import * as lambdaNodejs from 'aws-cdk-lib/aws-lambda-nodejs'; // 1. Added NodejsFunction import
+import * as lambdaNodejs from 'aws-cdk-lib/aws-lambda-nodejs'; 
 import * as path from 'node:path';
 
 export class ConsoleStack extends cdk.Stack {
@@ -12,21 +12,21 @@ export class ConsoleStack extends cdk.Stack {
     const lambda1 = new lambdaNodejs.NodejsFunction(this, 'Lambda1Function', {
       functionName: 'console-lambda1',
       runtime: lambda.Runtime.NODEJS_LATEST,
-      entry: path.join(__dirname, '../../src/lambda-handlers/console/lambda1/index.ts'),
+      entry: path.join(__dirname, '../handlers/lambda1/index.ts'),
       handler: 'handler',
     });
 
     const lambda2 = new lambdaNodejs.NodejsFunction(this, 'Lambda2Function', {
       functionName: 'console-lambda2',
       runtime: lambda.Runtime.NODEJS_LATEST,
-      entry: path.join(__dirname, '../../src/lambda-handlers/console/lambda2/index.ts'),
+      entry: path.join(__dirname, '../handlers/lambda2/index.ts'),
       handler: 'handler',
     });
 
     const lambda3 = new lambdaNodejs.NodejsFunction(this, 'Lambda3Function', {
       functionName: 'console-lambda3',
       runtime: lambda.Runtime.NODEJS_LATEST,
-      entry: path.join(__dirname, '../../src/lambda-handlers/console/lambda3/index.ts'),
+      entry: path.join(__dirname, '../handlers/lambda3/index.ts'),
       handler: 'handler',
     });
 
